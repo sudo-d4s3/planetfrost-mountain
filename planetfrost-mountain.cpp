@@ -22,6 +22,9 @@ int main(int argc, char const *argv[]) {
 
 
                 int ch = getch();
+                if (ch == 27) {
+                        break;
+                }
                 if (ch == 261 and x != 79) { //left arrow
                         mvaddch(y, x, '.');
                         x += 1;
@@ -41,5 +44,6 @@ int main(int argc, char const *argv[]) {
         }
         while (1);
 
+        endwin();
         return 0;
 }
