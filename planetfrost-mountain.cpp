@@ -1,10 +1,10 @@
 #include <ncurses.h>
-
+#include "draw_map.cpp"
 
 int main(int argc, char const *argv[]) {
         int x = 0;
         int y = 0;
-
+        char map[24][80];
 
         initscr();
         noecho();
@@ -12,9 +12,7 @@ int main(int argc, char const *argv[]) {
         curs_set(FALSE);
         keypad(stdscr, TRUE);
 
-        for (size_t i = 0; i < 24; i++) {
-                mvhline(i, 0, '.', 80);
-        }
+        draw_map(map);
         do {
                 mvaddch(y, x, '@');
                 move(y, x);
@@ -28,18 +26,26 @@ int main(int argc, char const *argv[]) {
                 if (ch == 261 and x != 79) { //left arrow
                         mvaddch(y, x, '.');
                         x += 1;
+                        redraw_map(map);
                 }
                 if (ch == 260 and x != 0) { //right arrow
                         mvaddch(y, x, '.');
                         x -= 1;
+                        redraw_map(map);
                 }
                 if (ch == 259 and y != 0) { //left arrow
                         mvaddch(y, x, '.');
                         y -= 1;
+                        redraw_map(map);
                 }
                 if (ch == 258 and y != 23) { //left arrow
                         mvaddch(y, x, '.');
                         y += 1;
+                        redraw_map(map);
+                }
+                if (ch == 32){
+                        //mvaddch(y + 1, x, '^');
+                        map[y][x] = '^';
                 }
         }
         while (1);
