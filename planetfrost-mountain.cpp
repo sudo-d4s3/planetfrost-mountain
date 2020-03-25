@@ -1,4 +1,5 @@
 #include <ncursesw/curses.h>
+#include <ctime>
 #include "draw_map.cpp"
 
 int main(int argc, char const *argv[]) {
@@ -6,6 +7,7 @@ int main(int argc, char const *argv[]) {
         int y = 12;
         char map[24][80];
         char crops[24][80];
+        int seeds = 10;
 
         initscr();
         noecho();
@@ -24,29 +26,30 @@ int main(int argc, char const *argv[]) {
                 if (ch == 27) {
                         break;
                 }
-                if (ch == 261 and x != 79) { //left arrow
+                if (ch == 261 and x != 79){ //left arrow
                         x += 1;
                         redraw_map(map);
                 }
-                if (ch == 260 and x != 0) { //right arrow
+                if (ch == 260 and x != 0){ //right arrow
                         x -= 1;
                         redraw_map(map);
                 }
-                if (ch == 259 and y != 0) { //left arrow
+                if (ch == 259 and y != 0){ //up arrow
                         y -= 1;
                         redraw_map(map);
                 }
-                if (ch == 258 and y != 23) { //left arrow
+                if (ch == 258 and y != 23){ //down arrow
                         y += 1;
                         redraw_map(map);
                 }
-                if (ch == 32){ //plant crop
-                        crops[y][x] = '*';
-                        map[y][x] = crops[y][x];
-                }
-                if (ch == 104){ //harvest crop
-                        if (crops[y][x] == '*'){
+                if (ch == 32) {
+                        if (seeds != 0 and map[y][x] != '*') {
+                                crops[y][x] = '*';
+                                seeds -= 1;
+                                map[y][x] = crops[y][x];
+                        } else if (map[y][x] == '*') {
                                 crops[y][x] = ' ';
+                                seeds += 1;
                                 map[y][x] = '.';
                         }
                 }

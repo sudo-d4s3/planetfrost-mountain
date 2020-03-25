@@ -1,3 +1,4 @@
 .ccls-cache
 output
 output.exe
+windows_cross_compile.sh
